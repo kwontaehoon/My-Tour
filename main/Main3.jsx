@@ -79,10 +79,10 @@ const Main3 = () => {
         let count = '';
         image.map((x, index) => {
             switch(index){ // 변수와 문자열의 조합이 안된다.. 벡틱도 불가
-                case 0: count = require('../images/1.jpg'); break;
-                case 1: count = require('../images/2.jpg'); break;
-                case 3: count = require('../images/3.jpg'); break;
-                case 2: count = require('../images/4.jpg'); break;
+                case 0: count = require('../images/강화도1.jpg'); break;
+                case 1: count = require('../images/강화도2.jpg'); break;
+                case 3: count = require('../images/강화도3.jpg'); break;
+                case 2: count = require('../images/강화도4.jpg'); break;
             }
             arr.push(
                 <View style={[a.subbox, {display: categories[0] ? 'flex' : 'none'}]} key={index}>

@@ -102,14 +102,14 @@ const App = ({navigation}) => {
         tabBarStyle:{ height: 60, position: 'absolute', paddingBottom: 7 },
         tabBarLabelStyle: { fontSize: 13 }}}>
 
-        <Tab.Screen name="Home" component={Main_Page} 
+        <Tab.Screen name="메인" component={Main_Page} 
         options={{tabBarIcon: () => (<Icon name='home' size={23} />)}} />
         
         
-        <Tab.Screen name="Location" component={Location}
+        <Tab.Screen name="위치" component={Location}
        options={{tabBarIcon: () => (<Icon name='location-arrow' size={23} />)}} />
     
-    <Tab.Screen name="Weather" options={{tabBarIcon: () => (<Icon name='user' size={23} />)}}>
+    <Tab.Screen name="날씨" options={{tabBarIcon: () => (<Icon name='cloud' size={23} />)}}>
         {()=>(
                <Stack.Navigator>
                     <Stack.Screen 
@@ -122,10 +122,10 @@ const App = ({navigation}) => {
               )}
         </Tab.Screen>
 
-        <Tab.Screen name="Like" component={Like}
+        <Tab.Screen name="찜" component={Like}
         options={{tabBarIcon: () => (<Icon name='thumbs-up' size={23} />)}} />
         
-        <Tab.Screen name="Mypage" options={{tabBarIcon: () => (<Icon name='user' size={23} />)}}>
+        <Tab.Screen name="마이페이지" options={{tabBarIcon: () => (<Icon name='user' size={23} />)}}>
         {()=>(
                <Stack.Navigator>
                     <Stack.Screen 

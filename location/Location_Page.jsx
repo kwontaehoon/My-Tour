@@ -17,9 +17,19 @@ const a = StyleSheet.create({
   }
 })
 const Location_Page = () => {
+
+  const test = [
+    {image: require('../images/강릉4.jpg')}
+  ]
+
+  console.log('test: ', test[0].image);
+  console.log(typeof(test[0].image));
+  console.log(Number(test[0].image));
+  console.log(parseInt(test[0].image));
+
   return (
     <View style={a.container}>
-        <Image source={require('../images/강릉1.jpg')} style={a.image}></Image>
+        <Image source={require('../images/강릉4.jpg')} style={a.image}></Image>
     </View>
   )
 }

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import { CustomPagination } from './CustomPagination';
 import * as SQLite from "expo-sqlite";
-import { ScrollView } from 'react-native-gesture-handler';
 
 const a = StyleSheet.create({
     container:{
@@ -114,7 +113,7 @@ const Main4 = () => {
     let arr = [];
     test.map((x, index)=>{
       arr.push(
-        <View style={a.subcontainer}>
+        <View style={a.subcontainer} key={index}>
             <View style={a.imageBox}>
                 <SwiperFlatList showPagination PaginationComponent={CustomPagination}
                 autoplay={true} autoplayDelay={5} autoplayLoop>

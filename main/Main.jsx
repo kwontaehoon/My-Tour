@@ -1,5 +1,6 @@
 import React, {useRef, useState} from 'react'
 import { View, Text, StyleSheet, ScrollView, Button, Image, TouchableOpacity } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 const a = StyleSheet.create({
     container:{
@@ -14,9 +15,12 @@ const a = StyleSheet.create({
       justifyContent: 'space-around',
       alignItems: 'center',
     },
+    hat:{
+      alignItems: 'center',
+    },
     box2:{
       width: 100,
-      height: 100,
+      height: 70,
       borderRadius: 20,
       shadowColor: "black",
       backgroundColor: 'white',
@@ -45,9 +49,9 @@ const a = StyleSheet.create({
     }
 
 })
-const Main = () => {
+const Main = ({complete, setComplete}) => {
 
-  const images = ['김포', '이천', '강화도', '여수', '강원도', '군산', '전주', '상암', '마곡'];
+  const images = ['서울', '경기', '인천', '제주도', '강원도', '전라남도', '전라북도', '경상북도', '부산'];
   const [cm, setCm] = useState(0);
 
   const List1 = () => {
@@ -64,9 +68,12 @@ const Main = () => {
       //     case 7: count = require('../images/h1.png'); break;
       // }
       arr.push(
-        <TouchableOpacity style={a.box2} key={index}>
+        <View style={a.hat} key={index}>
+          <View><Icon name='hat-cowboy' style={{fontSize: 35}}></Icon></View>
+        <TouchableOpacity style={a.box2} onPress={()=>setComplete(!complete)}>
             <View><Text style={{fontSize: 20, fontWeight: '500'}}>{x}</Text></View>
         </TouchableOpacity>
+        </View>
       )
     })
     return arr;

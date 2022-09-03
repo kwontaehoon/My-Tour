@@ -39,7 +39,7 @@ const a = StyleSheet.create({
       fontSize: 12,
       borderWidth: 1,
       borderColor: 'black',
-      paddingLeft: 10,
+      paddingLeft: 20,
       justifyContent: 'center',
     },
     search:{

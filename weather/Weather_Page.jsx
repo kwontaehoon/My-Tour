@@ -36,7 +36,6 @@ const Weather_Page = ({navigation, route}) => {
     const [select, setSelect] = useState([ // open weather api 다시 불러옴
       { id: favorites[0].id, title: favorites[0].title, etitle: favorites[0].etitle }
     ]);
-    const [info3, setInfo3] = useState([]);
     
     const key = '26bc7e52ad1e06fe08e9ac9920df3a31'; // open weather 키
     const key2 = '61817fe9871c5ce196a7b67a92ce3a6b';
@@ -46,21 +45,29 @@ const Weather_Page = ({navigation, route}) => {
 
     useEffect(()=>{
         const a = async ()=>{
+          try{
             const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${select[0].etitle}&appid=${key}`);
             console.log('데이터받아왔니??');
             console.log(response.data);
             setInfo(response.data);
             setList(response.data.list);
+          }catch(error){
+            console.log(error);
+          }
           }
           a();
         }, [select]);
 
       useEffect(()=>{
         const a = async ()=>{
+          try{
             const response = await axios.get(`http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?sidoName=${(select[0].title).substring(0, 2)}&pageNo=1&numOfRows=100&returnType=json&serviceKey=${key3}&ver=1.0`);
             console.log('미세먼지 받아왔니??');
             console.log('info2: ', response.data.response.body.items);
             setInfo2(response.data.response.body.items);
+          }catch(error){
+            console.log(error);
+          }
           }
           a();
         }, [select]);
@@ -73,16 +80,6 @@ const Weather_Page = ({navigation, route}) => {
         setSelect([route.params]);
         }
       }, [route]);
-
-      useEffect(()=>{
-        const a = async ()=>{
-            const response = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=seoul&appid=26bc7e52ad1e06fe08e9ac9920df3a31`);
-            console.log('데이터받아왔니??>>');
-            console.log(response.data);
-            setInfo3(response.data);
-          }
-          a();
-        }, []);
 
         
 

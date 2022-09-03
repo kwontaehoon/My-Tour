@@ -79,10 +79,10 @@ const Main2 = () => {
         let count = '';
         image.map((x, index) => {
             switch(index){ // 변수와 문자열의 조합이 안된다.. 벡틱도 불가 (반복문에서 index로하면안됨)
-                case 0: count = require('../images/1.jpg'); break;
-                case 1: count = require('../images/2.jpg'); break;
-                case 3: count = require('../images/3.jpg'); break;
-                case 2: count = require('../images/4.jpg'); break;
+                case 0: count = require('../images/김포1.jpg'); break;
+                case 1: count = require('../images/김포2.jpg'); break;
+                case 3: count = require('../images/김포3.jpg'); break;
+                case 2: count = require('../images/김포4.jpg'); break;
             }
             arr.push(
                 <View style={[a.subbox, {display: categories[0] ? 'flex' : 'none'}]} key={index}>
@@ -109,10 +109,10 @@ const Main2 = () => {
         let count = '';
         image.map((x, index) => {
             switch(index){  
-                case 0: count = require('../images/5.jpg'); break;
-                case 1: count = require('../images/6.jpg'); break;
-                case 3: count = require('../images/7.jpg'); break;
-                case 2: count = require('../images/8.jpg'); break;
+                case 0: count = require('../images/이천1.jpg'); break;
+                case 1: count = require('../images/이천2.jpg'); break;
+                case 3: count = require('../images/이천3.jpg'); break;
+                case 2: count = require('../images/이천4.jpg'); break;
             }
             arr.push(
                 <View style={[a.subbox, {display: categories[1] ? 'flex' : 'none'}]} key={index}>
@@ -138,10 +138,10 @@ const Main2 = () => {
         let count = '';
         image.map((x, index)=> {
             switch(index){  
-                case 0: count = require('../images/9.jpg'); break;
-                case 1: count = require('../images/10.jpg'); break;
-                case 3: count = require('../images/11.jpg'); break;
-                case 2: count = require('../images/12.png'); break;
+                case 0: count = require('../images/상암1.jpg'); break;
+                case 1: count = require('../images/상암2.jpg'); break;
+                case 3: count = require('../images/상암3.jpg'); break;
+                case 2: count = require('../images/상암4.jpg'); break;
             }
             arr.push(
                 <View style={[a.subbox, {display: categories[2] ? 'flex' : 'none'}]} key={index}>
@@ -164,11 +164,18 @@ const Main2 = () => {
     }
     const List4 = () => {
         let arr = [];
+        let count = '';
         image.map((x, index) => {
+            switch(index){  
+                case 0: count = require('../images/마곡1.jpg'); break;
+                case 1: count = require('../images/마곡2.jpg'); break;
+                case 3: count = require('../images/마곡3.jpg'); break;
+                case 2: count = require('../images/마곡4.jpg'); break;
+            }
             arr.push(
                 <View style={[a.subbox, {display: categories[3] ? 'flex' : 'none'}]} key={index}>
                 <View style={a.imagebox}>
-                    <Image source={require('../images/4.jpg')} style={a.image}></Image>
+                    <Image source={count} style={a.image}></Image>
                 </View>
                 <View style={a.infobox}>
                     <View style={a.top}>

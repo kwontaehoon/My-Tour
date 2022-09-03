@@ -140,7 +140,7 @@ const Main2 = ({info, list, info2, select}) => {
         let rain = list[e].rain;
         let dust = info2[0].pm10Value;
         
-        if(list[e].rain === undefined){ rain = 0; }
+        if(list[e].rain === undefined){ rain = '0'; }
 
         switch(true){
             case wind < 0.2 : wind2='고요';break;
