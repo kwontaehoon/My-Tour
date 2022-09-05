@@ -81,15 +81,13 @@ const a = StyleSheet.create({
 })
 const Result = ({complete, setComplete}) => {
 
-    const {info, setInfo} = useState([]); // db 값
-
-    const test = [1,2];
+    const test = [1, 2, 3];
 
     const List1 = () => {
         let arr = [];
         test.map((x, index)=>{
         arr.push(
-            <View style={a.tag}>
+            <View style={a.tag} key={index}>
                 <View style={a.inTag}>
                     <Icon name='close' style={{fontSize: 10}}></Icon>
                 </View>
@@ -109,7 +107,7 @@ const Result = ({complete, setComplete}) => {
                     <SwiperFlatList showPagination PaginationComponent={CustomPagination}
                     autoplay={true} autoplayDelay={5} autoplayLoop>
                         <View style={a.child}>
-                          <Image source={require('../images/강릉1.jpg')} style={a.image} resizeMode='stretch'></Image>
+                          <Image source={require(`../images/강릉${1}.jpg`)} style={a.image} resizeMode='stretch'></Image>
                         </View>
                         <View style={a.child}>
                           <Image source={require('../images/강릉1.jpg')} style={a.image} resizeMode='stretch'></Image>
@@ -137,17 +135,21 @@ const Result = ({complete, setComplete}) => {
         return arr;
       }
   return (
-    <ScrollView style={[a.container, {display: complete ? 'flex' : 'none'}]}>
-        <View style={a.header}>
+    <View style={[a.container, {display: complete ? 'flex' : 'none'}]}>
+      <View style={a.header}>
         <TouchableOpacity style={{flex: 1, paddingLeft: 10}} onPress={()=>setComplete(!complete)}>
             <Icon name='arrow-left' style={{fontSize: 25}}></Icon>
         </TouchableOpacity>
         <View style={a.tagBox}>
             <List1 />
         </View>
-        </View>
-        <List2 />
-    </ScrollView>
+      </View>
+    <View style={{height: 550}}>
+      <ScrollView>
+          <List2 />
+      </ScrollView>
+    </View>
+    </View>
   )
 }
 

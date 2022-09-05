@@ -18,6 +18,8 @@ import SignUp from './mypage/SignUp'
 import City_Search from './weather/City_Search'
 import Post from './mypage/Post'
 import axios from 'axios'
+import openDatabase from './db'
+import { DatabaseConnection } from './db2'
 
 LogBox.ignoreAllLogs();
 
@@ -26,21 +28,26 @@ const Tab = createBottomTabNavigator();
 
 
 
-const App = ({navigation}) => {
-  const [search, setSearch] = useState(false); // 검색 display
-  const [info, setInfo] = useState([]);
+const App = () => {
 
-  async function openDatabase(){
-    if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
-      await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
-    }
-    await FileSystem.downloadAsync(
-      Asset.fromModule(require('./assets/test.db')).uri,
-      FileSystem.documentDirectory + 'SQLite/test.db'
-    );
-    return SQLite.openDatabase('test.db');
-  }
-  //This returns a promise 
+  const [info, setInfo] = useState([]);
+  console.log('info: ', info);
+
+  // const db = SQLite.openDatabase('test.db');
+  const db2 = DatabaseConnection.getConnection();
+  // database._db.close();
+  
+
+  // async function openDatabase(){
+  //   if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
+  //     await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
+  //   }
+  //   await FileSystem.downloadAsync(
+  //     Asset.fromModule(require('./assets/test.db')).uri,
+  //     FileSystem.documentDirectory + 'SQLite/test.db'
+  //   );
+  //   return SQLite.openDatabase('test.db');
+  // }
 
   // const dt = new Date();
   // const CurrentTime = (dt.getHours())+":"+dt.getMinutes()+":"+dt.getSeconds()
@@ -50,26 +57,20 @@ const App = ({navigation}) => {
   // const dateString = year + month + day;
   // const serviceKey = 'Y4VLrNy6hcMz2TnhyK3%2BtCKiWrFOwWhhxg1R%2FgBtd9B1ty%2Fe%2FQz2z89s2e4IYd1p8hfkGw3lViB%2FGddDujE2vA%3D%3D'
 
-  // useEffect(()=>{
-  //   const a = async()=>{
-  //       const sunset = await axios.get(`http://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=26bc7e52ad1e06fe08e9ac9920df3a31`);
-  //       console.log('sunset: ', sunset);
-  //       // return sunset.data.response.body.items.item[0];
-  //   }
-  //     a();
-  // }, []);
 
 
   useEffect(() => {
-    openDatabase()
-     .then(db =>
-     db.transaction((tx) => {
-       tx.executeSql("SELECT * FROM city_search", [], (tx, results)=>{
-        console.log(results.rows._array);
+     db2.transaction((tx) => {
+       tx.executeSql("SELECT * FROM member", [], (tx, results)=>{
         setInfo(results.rows._array);
+        console.log(results.rows._array);
          }, error => {console.log('error');});
+
+        tx.executeSql("select * from tt", [], (tx, results)=>{
+          console.log(results.rows._array);
+        });
         })
-     )
+     
    }, []);
 
   //  const HomeScreen = ({navigation}) => {

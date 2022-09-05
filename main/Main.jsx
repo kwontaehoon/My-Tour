@@ -5,12 +5,12 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 const a = StyleSheet.create({
     container:{
       paddingLeft: 20,
-      paddingTop: 20,
-      height: 180,
+      paddingTop: 10,
+      height: 140,
     },
     subcontainer:{
       width: 1000,
-      height: 130,
+      height: 100,
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
@@ -68,12 +68,9 @@ const Main = ({complete, setComplete}) => {
       //     case 7: count = require('../images/h1.png'); break;
       // }
       arr.push(
-        <View style={a.hat} key={index}>
-          <View><Icon name='hat-cowboy' style={{fontSize: 35}}></Icon></View>
         <TouchableOpacity style={a.box2} onPress={()=>setComplete(!complete)}>
             <View><Text style={{fontSize: 20, fontWeight: '500'}}>{x}</Text></View>
         </TouchableOpacity>
-        </View>
       )
     })
     return arr;

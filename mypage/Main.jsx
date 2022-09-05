@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView , TextInput,
 Switch, Button} from 'react-native'
 import * as SQLite from "expo-sqlite"
-import Postcode from '@actbase/react-daum-postcode';
+import Postcode from '@actbase/react-daum-postcode'
 
 const a = StyleSheet.create({
     container:{

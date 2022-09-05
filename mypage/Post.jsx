@@ -15,17 +15,16 @@ const Post = ({navigation}) => {
     const getAddressData = data => {
         let defaultAddress = ''; // 기본주소
         if (data.buildingName === 'N') {
-            console.log('aa');
           defaultAddress = data.apartment;
         } else {
-            console.log('bb');
-            console.log('지번: ', data.jibunAddress);
-            console.log('도로명: ', data.roadAress);
             defaultAddress = data.buildingName;
         }
-        if(data.jibunAddress === undefined){
-            navigation.navigate('SignUp', data.roadAress);
-        }else navigation.navigate('SignUp', data.jibunAddress);
+        if(data.userSelectedType === 'R'){
+            navigation.navigate('SignUp',data.roadAddress);
+        }else
+         {
+            navigation.navigate('SignUp', data.jibunAddress);
+        }
 };
 
   return (

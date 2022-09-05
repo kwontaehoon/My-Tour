@@ -13,7 +13,7 @@ import Search_Page from '../search/Search_Page'
 const Main_Page = () => {
 
   const [scroll, setScroll] = useState(false); // search display animation
-  const [complete, setComplete] = useState(true);
+  const [complete, setComplete] = useState(true); // 태그 display
   console.log('complete: ', complete);
 
   return (

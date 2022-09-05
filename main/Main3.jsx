@@ -26,7 +26,7 @@ const a = StyleSheet.create({
     },
     box:{
         height: 560,
-        borderWidth: 3,
+        borderWidth: 2,
         borderColor: 'black',
         marginTop: 10,
         padding: 10,
