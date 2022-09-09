@@ -68,7 +68,7 @@ const Main = ({complete, setComplete}) => {
       //     case 7: count = require('../images/h1.png'); break;
       // }
       arr.push(
-        <TouchableOpacity style={a.box2} onPress={()=>setComplete(!complete)}>
+        <TouchableOpacity style={a.box2} onPress={()=>setComplete(!complete)} key={index}>
             <View><Text style={{fontSize: 20, fontWeight: '500'}}>{x}</Text></View>
         </TouchableOpacity>
       )

@@ -18,6 +18,7 @@ const a = StyleSheet.create({
 })
 const Location_Page = () => {
 
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=LIBRARY"></script>
   const test = [
     {image: require('../images/강릉4.jpg')}
   ]
@@ -28,9 +29,14 @@ const Location_Page = () => {
   console.log(parseInt(test[0].image));
 
   return (
-    <View style={a.container}>
-        <Image source={require('../images/강릉4.jpg')} style={a.image}></Image>
-    </View>
+    <Map
+      center={{ lat: 33.5563, lng: 126.79581 }}
+      style={{ width: "100%", height: "360px" }}
+    >
+      <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
+        <div style={{color:"#000"}}>Hello World!</div>
+      </MapMarker>
+    </Map>
   )
 }
 

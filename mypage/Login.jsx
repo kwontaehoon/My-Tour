@@ -55,9 +55,15 @@ const a = StyleSheet.create({
     }
 })
 
-const Login = ({route}) => {
+const Login = ({navigation, route}) => {
 
-  console.log(route.params);
+  // console.log(route); // undefined
+
+  const routetest = [
+    { id: 'gju04195', password: 1234, name: '권태훈', email: 'gju4195@naver.com'}
+]
+
+  // console.log(route.params);
 
   const [list, setList] = useState([
   {text: '좋아요', icon: 'heart'},
@@ -83,14 +89,20 @@ const Login = ({route}) => {
     })
     return arr;
   }
+
+  const logout = () => {
+     navigation.navgator('Login');
+  }
     
   return (
     <View style={a.container}>
-      <TouchableOpacity style={a.logout}><Text>로그아웃</Text></TouchableOpacity>
+      <TouchableOpacity style={a.logout} onPress={logout}><Text>로그아웃</Text></TouchableOpacity>
       <View style={a.header}>
         <View style={a.profileBox}></View>
-        <View style={{marginTop: 10}}><Text>{route.params[0].name}</Text></View>
-        <View><Text>{route.params[0].email}</Text></View>
+        <View style={{marginTop: 10}}>
+          <Text>{routetest[0].name}</Text>
+        </View>
+        <View><Text>{routetest[0].email}</Text></View>
       </View>
       <View style={a.main}>
         <List1 />

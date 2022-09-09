@@ -26,28 +26,29 @@ LogBox.ignoreAllLogs();
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-
-
 const App = () => {
 
   const [info, setInfo] = useState([]);
   console.log('info: ', info);
 
-  // const db = SQLite.openDatabase('test.db');
-  const db2 = DatabaseConnection.getConnection();
-  // database._db.close();
+  // const [weather, setWeather] = useState([]);
+  // console.log('weather: ', weather);
+
+  // const arr = [];
+  // for(let i=0; i<weather.length; i++){
+  //   if(weather[i].category === 'TMP'){
+  //     arr.push(weather[i]);
+  //   }
+  // }
+  // console.log(arr);
   
 
-  // async function openDatabase(){
-  //   if (!(await FileSystem.getInfoAsync(FileSystem.documentDirectory + 'SQLite')).exists) {
-  //     await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'SQLite');
-  //   }
-  //   await FileSystem.downloadAsync(
-  //     Asset.fromModule(require('./assets/test.db')).uri,
-  //     FileSystem.documentDirectory + 'SQLite/test.db'
-  //   );
-  //   return SQLite.openDatabase('test.db');
-  // }
+
+  const db = SQLite.openDatabase('test.db');
+  // const db2 = DatabaseConnection.getConnection();
+
+  console.log(FileSystem.documentDirectory + "SQLite/test.db");
+
 
   // const dt = new Date();
   // const CurrentTime = (dt.getHours())+":"+dt.getMinutes()+":"+dt.getSeconds()
@@ -60,18 +61,23 @@ const App = () => {
 
 
   useEffect(() => {
-     db2.transaction((tx) => {
+     db.transaction((tx) => {
        tx.executeSql("SELECT * FROM member", [], (tx, results)=>{
         setInfo(results.rows._array);
         console.log(results.rows._array);
          }, error => {console.log('error');});
-
-        tx.executeSql("select * from tt", [], (tx, results)=>{
-          console.log(results.rows._array);
-        });
         })
      
    }, []);
+
+  //  const serviceKey = 'qk9nBBzMQRaV836surNRuBQcZb4cadI7MSWXH5dFl8sqsfuwN8xa3VFVMkb4whG8MnFIEYrCTs0cxf%2B1cVcttQ%3D%3D'
+  //  useEffect(()=>{
+  //      const TdWeather = async ()=>{
+  //          const weather = await axios.get(`http://apis.data.go.kr/1360000/BeachInfoservice/getVilageFcstBeach?serviceKey=${serviceKey}&dataType=JSON&numOfRows=279&base_date=20220907&base_time=2300&beach_num=304`);
+  //          setWeather(weather.data.response.body.items.item);
+  //        }
+  //        TdWeather()
+  //  },[]);
 
   //  const HomeScreen = ({navigation}) => {
   //   return(

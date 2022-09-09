@@ -2,7 +2,6 @@ import React, { useState, useEffect, useReducer } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView , TextInput,
 Switch, Button} from 'react-native'
 import * as SQLite from "expo-sqlite"
-import Postcode from '@actbase/react-daum-postcode'
 
 const a = StyleSheet.create({
     container:{
@@ -43,7 +42,9 @@ const a = StyleSheet.create({
         fontWeight: 'bold',
     }
 })
-const Main = ({navigation}) => {
+const Main = ({navigation, route}) => {
+
+    // console.log('Main 라우트: ', route.params);
 
     const db = SQLite.openDatabase('test.db');
 
@@ -61,7 +62,7 @@ const Main = ({navigation}) => {
                     navigation.navigate('Login');
                 }else {
                     console.log('로그인됨');
-                    navigation.navigate('마이페이지', [info2, kwon]);
+                    navigation.navigate('마이페이지', [member, kwon]);
                 }
             case 'logout':
                 console.log('로그아웃');
@@ -75,8 +76,8 @@ const Main = ({navigation}) => {
         { id: 'gju04195', password: 1234, name: '권태훈', email: 'gju4195@naver.com'},
         { id: 'taehoon', password: 4567, name: '태훈', email: 'kk' }
     ]); // 회원가입 정보
-    const [info2, setInfo2] = useState([]);
-    console.log('info2: ', info2);
+    const [member, setMember] = useState([]); // 회원정보 받아옴
+    console.log('등록된 회원정보: ', member);
 
     const [kwon, dispatch] = useReducer(reducer, 0);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -84,7 +85,7 @@ const Main = ({navigation}) => {
     useEffect(()=> {
         db.transaction(tx => {
           tx.executeSql('select * from member;', [],(_, { rows: { _array } }) => {
-            setInfo2(_array)});});
+            setMember(_array)});});
       }, []);
 
 
@@ -113,7 +114,6 @@ const Main = ({navigation}) => {
         </TouchableOpacity>
         <View><Text>{kwon}</Text></View>
         </View>
-       
     </View>
   )
 }

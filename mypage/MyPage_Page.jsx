@@ -2,6 +2,7 @@ import React from 'react'
 import {View, Text, StyleSheet, ScrollView} from 'react-native'
 import Main from './Main'
 import Login from './Login'
+import SignUp from './SignUp'
 
 const a = StyleSheet.create({
   container:{
@@ -14,8 +15,8 @@ const a = StyleSheet.create({
 const MyPage_page = ({navigation}) => {
   return (
     <>
-    {/* <Login /> */}
-      <Main navigation={navigation}/>
+      <Login />
+      {/* <Main navigation={navigation}/> */}
     </>
   )
 }
