@@ -10,23 +10,22 @@ import Result from './Result'
 import Footer from './Footer'
 import Search_Page from '../search/Search_Page'
 
-const Main_Page = () => {
+const Main_Page = ({navigation, list}) => {
 
   const [scroll, setScroll] = useState(false); // search display animation
-  const [complete, setComplete] = useState(true); // 태그 display
-  console.log('complete: ', complete);
+  const [complete, setComplete] = useState(false); // 태그 display
 
   return (
     <>
     <Header scroll={scroll} setScroll={setScroll} />
-    <Search_Page scroll={scroll} setScroll={setScroll} complete={complete} setComplete={setComplete}/>
-    <Result complete={complete} setComplete={setComplete}/>
-    <ScrollView style={{display: complete ? 'none' : 'flex'}}>
-      <Main complete={complete} setComplete={setComplete}/>
+    <Search_Page scroll={scroll} setScroll={setScroll}/>
+   
+    <ScrollView>
+      <Main/>
       <Main4 />
       {/* <Main5 /> */}
-      <Main2 />
-      <Main3 />
+      <Main2 navigation={navigation}/>
+      <Main3 navigation={navigation}/>
       <Footer />
     </ScrollView>
     </>

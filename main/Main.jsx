@@ -15,9 +15,6 @@ const a = StyleSheet.create({
       justifyContent: 'space-around',
       alignItems: 'center',
     },
-    hat:{
-      alignItems: 'center',
-    },
     box2:{
       width: 100,
       height: 70,
@@ -49,7 +46,7 @@ const a = StyleSheet.create({
     }
 
 })
-const Main = ({complete, setComplete}) => {
+const Main = () => {
 
   const images = ['서울', '경기', '인천', '제주도', '강원도', '전라남도', '전라북도', '경상북도', '부산'];
   const [cm, setCm] = useState(0);
@@ -68,7 +65,7 @@ const Main = ({complete, setComplete}) => {
       //     case 7: count = require('../images/h1.png'); break;
       // }
       arr.push(
-        <TouchableOpacity style={a.box2} onPress={()=>setComplete(!complete)} key={index}>
+        <TouchableOpacity style={a.box2} key={index}>
             <View><Text style={{fontSize: 20, fontWeight: '500'}}>{x}</Text></View>
         </TouchableOpacity>
       )

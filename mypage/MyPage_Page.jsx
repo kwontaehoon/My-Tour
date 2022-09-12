@@ -7,16 +7,14 @@ import SignUp from './SignUp'
 const a = StyleSheet.create({
   container:{
     marginTop: 20,
-
   }
 })
-
 
 const MyPage_page = ({navigation}) => {
   return (
     <>
-      <Login />
-      {/* <Main navigation={navigation}/> */}
+      {/* <Login /> */}
+      <Main navigation={navigation}/>
     </>
   )
 }

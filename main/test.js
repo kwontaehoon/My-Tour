@@ -1,9 +1,5 @@
-const arr1 = '/src';
+const arr = '강원도 강릉시';
 
-const arr2 = '/img';
+const name = '강릉';
 
-// const arr3 = ['/img', '/src/'];
-
-const a = arr2.concat(arr1);
-
-console.log(a);
+console.log(arr.includes('강릉'));

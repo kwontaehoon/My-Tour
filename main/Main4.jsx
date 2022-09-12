@@ -54,8 +54,7 @@ const a = StyleSheet.create({
 const Main4 = () => {
   
   const db = SQLite.openDatabase('test.db');
-  const kwon = 3;
-  const test = [
+  const location = [
     {
       id: 1,
       title: '강원도 강릉시',
@@ -96,22 +95,20 @@ const Main4 = () => {
       image3: require('../images/양평3.jpg'),
       image4: require('../images/양평4.jpg')
     },
-
   ]
 
 
   useEffect(()=> {
     db.transaction(tx => {
       tx.executeSql('select * from main4;', [],(_, { rows: { _array } }) => {
-        setInfo(_array)});});
+        });
+      });
   }, []);
 
-  const [info, setInfo] = useState([]);
-  console.log('info: ', info);
 
   const List1 = () => {
     let arr = [];
-    test.map((x, index)=>{
+    location.map((x, index)=>{
       arr.push(
         <View style={a.subcontainer} key={index}>
             <View style={a.imageBox}>

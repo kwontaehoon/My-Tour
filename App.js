@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect} from 'react'
 import { View, Text, Button, LogBox } from 'react-native'
 import Main_Page from './main/Main_Page'
 import * as SQLite from "expo-sqlite";
@@ -7,8 +7,9 @@ import { Asset } from 'expo-asset'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Result from './main/Result'
 import MyPage from './mypage/MyPage_Page'
-import UserContext from './context'
+import InfoContext from './context'
 import Like from './like/Like_Page'
 import Location from './location/Location_Page'
 import Weather from './weather/Weather_Page'
@@ -20,6 +21,7 @@ import Post from './mypage/Post'
 import axios from 'axios'
 import openDatabase from './db'
 import { DatabaseConnection } from './db2'
+import all_location from './local'
 
 LogBox.ignoreAllLogs();
 
@@ -28,8 +30,11 @@ const Tab = createBottomTabNavigator();
 
 const App = () => {
 
-  const [info, setInfo] = useState([]);
+  const [info, setInfo] = useState([]); // db test용
   console.log('info: ', info);
+  const [like, setLike] = useState({id: "123"}); // 찜
+  const [list, setList] = useState(all_location); // 전체 location
+  console.log('list: ', list);
 
   // const [weather, setWeather] = useState([]);
   // console.log('weather: ', weather);
@@ -64,7 +69,6 @@ const App = () => {
      db.transaction((tx) => {
        tx.executeSql("SELECT * FROM member", [], (tx, results)=>{
         setInfo(results.rows._array);
-        console.log(results.rows._array);
          }, error => {console.log('error');});
         })
      
@@ -102,21 +106,45 @@ const App = () => {
 
 
   return (
-    <UserContext.Provider value={{name: 'taehoon'}}>
+    <InfoContext.Provider value={{like, setLike}}>
     <NavigationContainer>
 
       <Tab.Navigator screenOptions={{ headerShown: false,
         tabBarStyle:{ height: 60, position: 'absolute', paddingBottom: 7 },
         tabBarLabelStyle: { fontSize: 13 }}}>
 
-        <Tab.Screen name="메인" component={Main_Page} 
-        options={{tabBarIcon: () => (<Icon name='home' size={23} />)}} />
+        <Tab.Screen name="메인" options={{tabBarIcon: () => (<Icon name='home' size={23} />)}}>
+          {()=>(
+               <Stack.Navigator >
+                    <Stack.Screen 
+                        name="Main_Page"
+                        children={({navigation})=> <Main_Page list={list} navigation={navigation} />}
+                        options={{headerShown: false}}
+                        />
+                    <Stack.Screen 
+                        name="Result"
+                        children={({navigation, route})=> <Result list={list} navigation={navigation} route={route}/>}
+                        list={list}
+                        />
+               </Stack.Navigator>   
+              )}
+
+        </Tab.Screen>
         
         
-        <Tab.Screen name="위치" component={Location}
-       options={{tabBarIcon: () => (<Icon name='location-arrow' size={23} />)}} />
+        <Tab.Screen name="위치" options={{tabBarIcon: () => (<Icon name='location-arrow' size={23} />)}}>
+        {()=>(
+               <Stack.Navigator >
+                    <Stack.Screen 
+                        name="위치"
+                        component={Location}
+                        // options={{headerShown: false}}
+                        />
+               </Stack.Navigator>   
+              )}
+        </Tab.Screen>
     
-    <Tab.Screen name="날씨" options={{tabBarIcon: () => (<Icon name='cloud' size={23} />)}}>
+        <Tab.Screen name="날씨" options={{tabBarIcon: () => (<Icon name='cloud' size={23} />)}}>
         {()=>(
                <Stack.Navigator>
                     <Stack.Screen 
@@ -153,7 +181,7 @@ const App = () => {
 
       </Tab.Navigator>
     </NavigationContainer>
-    </UserContext.Provider>
+    </InfoContext.Provider>
   )
 }
 

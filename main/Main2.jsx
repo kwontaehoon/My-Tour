@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Image, Button, TouchableHighlight, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const a = StyleSheet.create({
     container:{
@@ -53,22 +54,12 @@ const a = StyleSheet.create({
         backgroundColor: 'yellogreen',
         padding: 10,
     },
-    info:{
-
-    },
     top:{
         flex: 1,
         height: 75,
     },
-    bottom:{
-        flex: 1,
-        height: 75,
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end',
-    }
 })
-const Main2 = () => {
-
+const Main2 = ({navigation}) => {
 
     const [categories, setCategories] = useState([true, false, false, false]);
     // 추천 여행지 display, 카테고리 폰트 bold
@@ -85,20 +76,18 @@ const Main2 = () => {
                 case 2: count = require('../images/김포4.jpg'); break;
             }
             arr.push(
-                <View style={[a.subbox, {display: categories[0] ? 'flex' : 'none'}]} key={index}>
-                <View style={a.imagebox}>
-                    <Image source={count} style={a.image}></Image>
-                </View>
-                <View style={a.infobox}>
-                    <View style={a.top}>
-                        <View><Text style={{marginBottom: 5, fontWeight: 'bold'}}>제주도입니다</Text></View>
-                        <View><Text style={{fontSize: 10}}><Icon name="heart" size={10} />  4.94</Text></View>
+                <TouchableOpacity style={[a.subbox, {display: categories[0] ? 'flex' : 'none'}]}
+                onPress={()=>insert('김포')} key={index}>
+                    <View style={a.imagebox}>
+                        <Image source={count} style={a.image}></Image>
                     </View>
-                    <View style={a.bottom}>
-                        <View><Text>$3.00</Text></View>
+                    <View style={a.infobox}>
+                        <View style={a.top}>
+                            <View><Text style={{marginBottom: 5, fontWeight: 'bold'}}>김포</Text></View>
+                            <View><Text style={{fontSize: 10}}><Icon name="heart" size={10} />  4.94</Text></View>
+                        </View>
                     </View>
-                </View>
-            </View>
+                </TouchableOpacity>
             )
             
         })
@@ -115,20 +104,18 @@ const Main2 = () => {
                 case 2: count = require('../images/이천4.jpg'); break;
             }
             arr.push(
-                <View style={[a.subbox, {display: categories[1] ? 'flex' : 'none'}]} key={index}>
-                <View style={a.imagebox}>
-                    <Image source={count} style={a.image}></Image>
-                </View>
-                <View style={a.infobox}>
-                    <View style={a.top}>
-                        <View><Text style={{marginBottom: 5, fontWeight: 'bold'}}>제주도입니다</Text></View>
-                        <View><Text style={{fontSize: 10}}><Icon name="heart" size={10} />  4.93</Text></View>
+                <TouchableOpacity style={[a.subbox, {display: categories[1] ? 'flex' : 'none'}]}
+                onPress={()=>insert('이천')} key={index}>
+                    <View style={a.imagebox}>
+                        <Image source={count} style={a.image}></Image>
                     </View>
-                    <View style={a.bottom}>
-                        <View><Text>$3.00</Text></View>
+                    <View style={a.infobox}>
+                        <View style={a.top}>
+                            <View><Text style={{marginBottom: 5, fontWeight: 'bold'}}>이천</Text></View>
+                            <View><Text style={{fontSize: 10}}><Icon name="heart" size={10} />  4.93</Text></View>
+                        </View>
                     </View>
-                </View>
-            </View>
+                </TouchableOpacity>
             )
         })
         return arr;
@@ -144,20 +131,18 @@ const Main2 = () => {
                 case 2: count = require('../images/상암4.jpg'); break;
             }
             arr.push(
-                <View style={[a.subbox, {display: categories[2] ? 'flex' : 'none'}]} key={index}>
-                <View style={a.imagebox}>
-                    <Image source={count} style={a.image}></Image>
-                </View>
-                <View style={a.infobox}>
-                    <View style={a.top}>
-                        <View><Text style={{marginBottom: 5, fontWeight: 'bold'}}>제주도입니다</Text></View>
-                        <View><Text style={{fontSize: 10}}><Icon name="heart" size={10} />  4.92</Text></View>
+                <TouchableOpacity style={[a.subbox, {display: categories[2] ? 'flex' : 'none'}]}
+                onPress={()=>insert('상암')} key={index}>
+                    <View style={a.imagebox}>
+                        <Image source={count} style={a.image}></Image>
                     </View>
-                    <View style={a.bottom}>
-                        <View><Text>$3.00</Text></View>
+                    <View style={a.infobox}>
+                        <View style={a.top}>
+                            <View><Text style={{marginBottom: 5, fontWeight: 'bold'}}>상암</Text></View>
+                            <View><Text style={{fontSize: 10}}><Icon name="heart" size={10} />  4.92</Text></View>
+                        </View>
                     </View>
-                </View>
-            </View>
+                </TouchableOpacity>
             )
         })
         return arr;
@@ -173,20 +158,18 @@ const Main2 = () => {
                 case 2: count = require('../images/마곡4.jpg'); break;
             }
             arr.push(
-                <View style={[a.subbox, {display: categories[3] ? 'flex' : 'none'}]} key={index}>
+                <TouchableOpacity style={[a.subbox, {display: categories[3] ? 'flex' : 'none'}]} 
+                onPress={()=>insert('마곡')} key={index}>
                 <View style={a.imagebox}>
                     <Image source={count} style={a.image}></Image>
                 </View>
                 <View style={a.infobox}>
                     <View style={a.top}>
-                        <View><Text style={{marginBottom: 5, fontWeight: 'bold'}}>제주도입니다</Text></View>
+                        <View><Text style={{marginBottom: 5, fontWeight: 'bold'}}>마곡</Text></View>
                         <View><Text style={{fontSize: 10}}><Icon name="heart" size={10} />  4.91</Text></View>
                     </View>
-                    <View style={a.bottom}>
-                        <View><Text>$3.00</Text></View>
-                    </View>
                 </View>
-            </View>
+                </TouchableOpacity>
             )
         })
         return arr;
@@ -195,6 +178,11 @@ const Main2 = () => {
         let arr = Array.from({length: 4}, () => {return false});
         arr[e] = true;
         setCategories(arr);
+    }
+    
+    const insert = (location) => {
+        AsyncStorage.setItem(location, location);
+        navigation.navigate('Result');
     }
 
   return (

@@ -14,6 +14,7 @@ const data = [{
    
 
 }]
+
 const Test = (props) => {
 
     const { image, name, occupation, description } = props;

@@ -1,42 +1,101 @@
-import React from 'react'
-import {View, Text, StyleSheet, Image} from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
+import {View, Text, StyleSheet, Image, ScrollView} from 'react-native'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
+import InfoContext from '../context'
+import all_location from '../local'
 
 const a = StyleSheet.create({
   container:{
-    height: 500,
+    height: '100%',
+  },
+  box:{
+    width: '85%',
+    height: 80,
+    position: 'absolute',
+    top: 0,
+    zIndex: 999,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  like:{
+    width: 100,
+    height: 50,
     borderWidth: 1,
     borderColor: 'black',
-    marginTop: 50,
+    margin: 10,
+    borderRadius: 10,
   },
-  image:{
+  map:{
+  	flex: 1,
     width: '100%',
     height: '100%',
-    borderRadius: 10,
-    overflow: 'hidden',
-
-  }
+  },
 })
+
 const Location_Page = () => {
+  
+  console.log('all_location: ', all_location);
+  const { test } = useContext(InfoContext);
+  const { isDark, setIsDark } = useContext(InfoContext);
+  console.log('test: ', test);
+  console.log('isDark: ', isDark);
 
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=LIBRARY"></script>
-  const test = [
-    {image: require('../images/강릉4.jpg')}
-  ]
+  const [location, setLocation] = useState(null); // 경도, 위도 정보
+  console.log('location: ', location); 
+  const [errorMsg, setErrorMsg] = useState(null);
 
-  console.log('test: ', test[0].image);
-  console.log(typeof(test[0].image));
-  console.log(Number(test[0].image));
-  console.log(parseInt(test[0].image));
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+    }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+
+  const [initialRegion, setInitialRegion] = useState({
+    latitude: 37.61524,
+    longitude: 126.715,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  })
 
   return (
-    <Map
-      center={{ lat: 33.5563, lng: 126.79581 }}
-      style={{ width: "100%", height: "360px" }}
-    >
-      <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
-        <div style={{color:"#000"}}>Hello World!</div>
-      </MapMarker>
-    </Map>
+    <View style={a.container}>
+        <View style={a.box}>
+          <ScrollView horizontal={true}>
+              <View style={a.like}></View>
+              <View style={a.like}></View>
+              <View style={a.like}></View>
+              <View style={a.like}></View>
+              <View style={a.like}></View>
+          </ScrollView>
+        </View>
+        
+      
+        <MapView
+          showsUserLocation={true}
+          showsMyLocationButton={[true]}
+          followsUserLocation={true}
+          // provider={PROVIDER_GOOGLE}
+          style={[a.map]}
+          initialRegion={initialRegion}
+          // customMapStyle={mapstyle}
+        >
+        
+        <Marker
+        coordinate={{ latitude : 37.615 , longitude : 126.715 }}
+        />
+            
+        </MapView>
+    </View>
   )
 }
 

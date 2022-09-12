@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SwiperFlatList from 'react-native-swiper-flatlist'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { CustomPagination } from './CustomPagination'
 
 const a = StyleSheet.create({
@@ -79,19 +80,35 @@ const a = StyleSheet.create({
         elevation: 10,
       }
 })
-const Result = ({complete, setComplete}) => {
+const Result = ({route, list}) => {
 
-    const test = [1, 2, 3];
+  console.log('result list: ', list);
+  // const isDark = useContext(InfoContext);
+  // console.log('isDark: ', isDark);
+
+  const [filter, setFilter] = useState([]); // location 필터링
+  console.log('filter: ', filter);
+
+
+  useEffect(()=>{
+    AsyncStorage.getAllKeys((err, keys) => {
+      AsyncStorage.multiGet(keys, (err, stores) => {
+        setFilter(stores);
+      });
+    });
+
+    
+  }, [route]);
 
     const List1 = () => {
         let arr = [];
-        test.map((x, index)=>{
+        filter.map((x, index)=>{
         arr.push(
             <View style={a.tag} key={index}>
-                <View style={a.inTag}>
+                <TouchableOpacity style={a.inTag} onPress={()=>remove(x[0])}>
                     <Icon name='close' style={{fontSize: 10}}></Icon>
-                </View>
-                <View><Text>내용임</Text></View>
+                </TouchableOpacity>
+                <View><Text>{filter[index][0]}</Text></View>
             </View>
         )
     })
@@ -100,55 +117,64 @@ const Result = ({complete, setComplete}) => {
 
     const List2 = () => {
         let arr = [];
-        test.map((x, index)=>{
+        filter.map((x, index)=>{
+          for(let i=0; i<list.length; i++){
+            if(list[i].title.includes(x[0])){
           arr.push(
             <View style={a.subcontainer} key={index}>
                 <View style={a.imageBox}>
                     <SwiperFlatList showPagination PaginationComponent={CustomPagination}
                     autoplay={true} autoplayDelay={5} autoplayLoop>
                         <View style={a.child}>
-                          <Image source={require(`../images/강릉${1}.jpg`)} style={a.image} resizeMode='stretch'></Image>
+                          <Image source={list[i].image1} style={a.image} resizeMode='stretch'></Image>
                         </View>
                         <View style={a.child}>
-                          <Image source={require('../images/강릉1.jpg')} style={a.image} resizeMode='stretch'></Image>
+                          <Image source={list[i].image2} style={a.image} resizeMode='stretch'></Image>
                         </View>
                         <View style={a.child}>
-                          <Image source={require('../images/강릉1.jpg')} style={a.image} resizeMode='stretch'></Image>
+                          <Image source={list[i].image3} style={a.image} resizeMode='stretch'></Image>
                         </View>
                         <View style={a.child}>
-                          <Image source={require('../images/강릉1.jpg')} style={a.image} resizeMode='stretch'></Image>
+                          <Image source={list[i].image4} style={a.image} resizeMode='stretch'></Image>
                         </View>
                     </SwiperFlatList>
                 </View>
                 <View style={a.contentBox}>
                     <View style={a.contentBox2}>
-                        <View style={a.content}><Text>제목</Text></View>
+                        <View style={a.content}><Text>{list[i].title}</Text></View>
                         <View style={[a.content, {alignItems: 'flex-end'}]}><Text><Icon name='heart'></Icon>  5.00</Text></View>
                     </View>
                     <View style={a.contentBox2}>
-                            <View style={a.content}><Text style={{color: 'grey'}}>내용</Text></View>
+                            <View style={a.content}><Text style={{color: 'grey'}}>{list[i].content}</Text></View>
                     </View>
                 </View>
             </View>
           )
+          break;
+        }}
         })
         return arr;
       }
+
+      const remove = (e) => {
+        let arr = [...filter];
+        arr = arr.filter(x => x[0] !== e);
+        setFilter(arr);
+        AsyncStorage.removeItem(e);
+      }
+
   return (
-    <View style={[a.container, {display: complete ? 'flex' : 'none'}]}>
+    <View style={a.container}>
       <View style={a.header}>
-        <TouchableOpacity style={{flex: 1, paddingLeft: 10}} onPress={()=>setComplete(!complete)}>
-            <Icon name='arrow-left' style={{fontSize: 25}}></Icon>
-        </TouchableOpacity>
         <View style={a.tagBox}>
             <List1 />
         </View>
+        </View>
+      <View style={{height: '88%'}}>
+        <ScrollView>
+            <List2 />
+        </ScrollView>
       </View>
-    <View style={{height: 550}}>
-      <ScrollView>
-          <List2 />
-      </ScrollView>
-    </View>
     </View>
   )
 }
