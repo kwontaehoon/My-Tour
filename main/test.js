@@ -1,5 +1,7 @@
-const arr = '강원도 강릉시';
+const arr = [{
+    id: 1, title: 'test1'
+}]
 
-const name = '강릉';
+const arr2 = [...arr, {id: 2, title: 'test2'}];
 
-console.log(arr.includes('강릉'));
+console.log(arr2);

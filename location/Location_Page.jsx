@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import {View, Text, StyleSheet, Image, ScrollView} from 'react-native'
+import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity} from 'react-native'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import InfoContext from '../context'
@@ -11,7 +11,7 @@ const a = StyleSheet.create({
   },
   box:{
     width: '85%',
-    height: 80,
+    height: 60,
     position: 'absolute',
     top: 0,
     zIndex: 999,
@@ -20,12 +20,18 @@ const a = StyleSheet.create({
     alignItems: 'center',
   },
   like:{
-    width: 100,
+    padding: 10,
     height: 50,
-    borderWidth: 1,
-    borderColor: 'black',
     margin: 10,
     borderRadius: 10,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 10,
+  },
+  like_text:{
+    color: 'gray',
+    fontWeight: 'bold',
   },
   map:{
   	flex: 1,
@@ -34,17 +40,20 @@ const a = StyleSheet.create({
   },
 })
 
-const Location_Page = () => {
+const Location_Page = ({route}) => {
   
-  console.log('all_location: ', all_location);
-  const { test } = useContext(InfoContext);
-  const { isDark, setIsDark } = useContext(InfoContext);
-  console.log('test: ', test);
-  console.log('isDark: ', isDark);
-
+  const { like, setLike } = useContext(InfoContext);
   const [location, setLocation] = useState(null); // 경도, 위도 정보
-  console.log('location: ', location); 
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null); // 위치정보 에러발생시
+
+  const [initialRegion, setInitialRegion] = useState({
+    latitude: 37.61524,
+    longitude: 126.715,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  })
+  
+  console.log('현재 위치: ', initialRegion);
 
   useEffect(() => {
     (async () => {
@@ -59,30 +68,47 @@ const Location_Page = () => {
     })();
   }, []);
 
+  useEffect(()=>{
+    console.log('useEffect');
+    console.log('location route: ', route);
+    console.log(route.params.latitude);
+    console.log(route.params.longitude);
+    setInitialRegion((prevState) => ({
+      ...prevState,
+      latitude: route.params.latitude,
+      longitude: route.params.longitude,
+    }));
+  }, [route]);
 
-  const [initialRegion, setInitialRegion] = useState({
-    latitude: 37.61524,
-    longitude: 126.715,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  })
+  const List1 = () => {
+    if(like.info.length !== 0){
+    let arr = [];
+    like.info.map((x, index)=>{
+      arr.push(
+        <TouchableOpacity style={a.like}><Text style={a.like_text}>{x.title}</Text></TouchableOpacity>
+      )
+    })
+    return arr;
+  }else return(
+    <View></View>
+  )
+  }
+
+
+  
 
   return (
     <View style={a.container}>
         <View style={a.box}>
-          <ScrollView horizontal={true}>
-              <View style={a.like}></View>
-              <View style={a.like}></View>
-              <View style={a.like}></View>
-              <View style={a.like}></View>
-              <View style={a.like}></View>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+              <List1 />
           </ScrollView>
         </View>
         
       
         <MapView
           showsUserLocation={true}
-          showsMyLocationButton={[true]}
+          showsMyLocationButton={true}
           followsUserLocation={true}
           // provider={PROVIDER_GOOGLE}
           style={[a.map]}

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, Button, LogBox } from 'react-native'
+import { View, Text, Button, LogBox, StyleSheet } from 'react-native'
 import Main_Page from './main/Main_Page'
 import * as SQLite from "expo-sqlite";
 import * as FileSystem  from 'expo-file-system'
@@ -25,16 +25,29 @@ import all_location from './local'
 
 LogBox.ignoreAllLogs();
 
+const a = StyleSheet.create({
+  like_add:{
+    position: 'absolute',
+    width: 8,
+    height: 8,
+    backgroundColor: 'red',
+    right: -10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
+  }
+})
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const App = () => {
 
   const [info, setInfo] = useState([]); // db test용
-  console.log('info: ', info);
-  const [like, setLike] = useState({id: "123"}); // 찜
+  const [like, setLike] = useState({
+    info: '', alaram: false
+  }); // 좋아요
   const [list, setList] = useState(all_location); // 전체 location
-  console.log('list: ', list);
 
   // const [weather, setWeather] = useState([]);
   // console.log('weather: ', weather);
@@ -118,7 +131,7 @@ const App = () => {
                <Stack.Navigator >
                     <Stack.Screen 
                         name="Main_Page"
-                        children={({navigation})=> <Main_Page list={list} navigation={navigation} />}
+                        children={({navigation})=> <Main_Page list={list} navigation={navigation} like={like} setLike={setLike}/>}
                         options={{headerShown: false}}
                         />
                     <Stack.Screen 
@@ -157,8 +170,24 @@ const App = () => {
               )}
         </Tab.Screen>
 
-        <Tab.Screen name="찜" component={Like}
-        options={{tabBarIcon: () => (<Icon name='thumbs-up' size={23} />)}} />
+        <Tab.Screen name="찜" options={{tabBarIcon: () => (
+          <View>
+            <Icon name='thumbs-up' size={25} />
+            <View style={[a.like_add, {display: like.alaram ? 'flex' : 'none'}]}></View>
+          </View> )}}>
+        {()=>(
+               <Stack.Navigator>
+                    <Stack.Screen 
+                        name="찜 목록"
+                        children={({navigation})=> <Like navigation={navigation} like={like} setLike={setLike}/>}/>
+                        <Stack.Screen 
+                        name="위치" // 다른 네비로 이동할 때 다른 네비를 꼭 써주자!!!!!!!!!!!!!!!
+                        component={Location}
+                        // options={{headerShown: false}}
+                        />
+               </Stack.Navigator>   
+        )}
+        </Tab.Screen>
         
         <Tab.Screen name="마이페이지" options={{tabBarIcon: () => (<Icon name='user' size={23} />)}}>
         {()=>(

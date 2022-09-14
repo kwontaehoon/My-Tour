@@ -10,7 +10,7 @@ import Result from './Result'
 import Footer from './Footer'
 import Search_Page from '../search/Search_Page'
 
-const Main_Page = ({navigation, list}) => {
+const Main_Page = ({navigation, list, like, setLike}) => {
 
   const [scroll, setScroll] = useState(false); // search display animation
   const [complete, setComplete] = useState(false); // 태그 display
@@ -21,8 +21,8 @@ const Main_Page = ({navigation, list}) => {
     <Search_Page scroll={scroll} setScroll={setScroll}/>
    
     <ScrollView>
-      <Main/>
-      <Main4 />
+      <Main navigation={navigation}/>
+      <Main4/>
       {/* <Main5 /> */}
       <Main2 navigation={navigation}/>
       <Main3 navigation={navigation}/>

@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react'
 import { View, Text, StyleSheet, ScrollView, Button, Image, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const a = StyleSheet.create({
     container:{
@@ -46,10 +47,10 @@ const a = StyleSheet.create({
     }
 
 })
-const Main = () => {
+const Main = ({navigation}) => {
 
   const images = ['서울', '경기', '인천', '제주도', '강원도', '전라남도', '전라북도', '경상북도', '부산'];
-  const [cm, setCm] = useState(0);
+  const [cm, setCm] = useState(0); // scrollView 테스트용
 
   const List1 = () => {
     let arr = [];
@@ -65,13 +66,18 @@ const Main = () => {
       //     case 7: count = require('../images/h1.png'); break;
       // }
       arr.push(
-        <TouchableOpacity style={a.box2} key={index}>
-            <View><Text style={{fontSize: 20, fontWeight: '500'}}>{x}</Text></View>
+        <TouchableOpacity style={a.box2} key={index} onPress={()=>insert(x)}>
+            <Text style={{fontSize: 20, fontWeight: '500'}}>{x}</Text>
         </TouchableOpacity>
       )
     })
     return arr;
   }
+
+  const insert = (location) => {
+    AsyncStorage.setItem(location, location);
+    navigation.navigate('Result');
+}
 
   return (
     <View style={a.container}>

@@ -63,7 +63,7 @@ const Login = ({navigation, route}) => {
     { id: 'gju04195', password: 1234, name: '권태훈', email: 'gju4195@naver.com'}
 ]
 
-  // console.log(route.params);
+  console.log('login route: ', route.params);
 
   const [list, setList] = useState([
   {text: '좋아요', icon: 'heart'},
@@ -91,7 +91,7 @@ const Login = ({navigation, route}) => {
   }
 
   const logout = () => {
-     navigation.navgator('Login');
+     navigation.navigator('Login');
   }
     
   return (

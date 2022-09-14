@@ -82,13 +82,10 @@ const a = StyleSheet.create({
 })
 const Result = ({route, list}) => {
 
-  console.log('result list: ', list);
   // const isDark = useContext(InfoContext);
   // console.log('isDark: ', isDark);
 
   const [filter, setFilter] = useState([]); // location 필터링
-  console.log('filter: ', filter);
-
 
   useEffect(()=>{
     AsyncStorage.getAllKeys((err, keys) => {
@@ -117,9 +114,11 @@ const Result = ({route, list}) => {
 
     const List2 = () => {
         let arr = [];
+        let arr2 = [];
         filter.map((x, index)=>{
           for(let i=0; i<list.length; i++){
-            if(list[i].title.includes(x[0])){
+            if(list[i].title.includes(x[0]) && !arr2.includes(list[i].title)){
+              arr2.push(list[i].title);
           arr.push(
             <View style={a.subcontainer} key={index}>
                 <View style={a.imageBox}>
@@ -150,7 +149,6 @@ const Result = ({route, list}) => {
                 </View>
             </View>
           )
-          break;
         }}
         })
         return arr;
