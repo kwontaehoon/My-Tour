@@ -86,16 +86,16 @@ const Like_page = ({navigation}) => {
     }))
   });
   
-  useEffect(() => {
-    return () => unsubscribe();
-  });
+  // useEffect(() => {
+  //   return () => unsubscribe();
+  // });
 
   const List1 = () => {
     if(like.info.length !== 0){
     let arr = [];
     like.info.map((x, index)=>{
       arr.push(
-        <View style={a.box}>
+        <View style={a.box} key={index}>
           <View style={a.select_box}>
             <View style={a.select}></View>
           </View>

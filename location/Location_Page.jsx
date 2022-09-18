@@ -40,9 +40,10 @@ const a = StyleSheet.create({
   },
 })
 
-const Location_Page = ({route}) => {
+const Location_Page = ({navigation, route}) => {
   
-  const { like, setLike } = useContext(InfoContext);
+  const { like, setLike } = useContext(InfoContext); // 좋아요 정보
+  console.log('like: ', like);
   const [location, setLocation] = useState(null); // 경도, 위도 정보
   const [errorMsg, setErrorMsg] = useState(null); // 위치정보 에러발생시
 
@@ -52,8 +53,19 @@ const Location_Page = ({route}) => {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   })
-  
-  console.log('현재 위치: ', initialRegion);
+  console.log('initialRegion: ', initialRegion);
+
+  const [like_location, setLike_location] = useState([ // 좋아요 위치 정보
+    {
+      latitude: 0,
+      longitude: 0,
+    }
+])
+
+const test = [{ latitude : 37.615 , longitude : 126.715 }];
+
+  console.log('like_location', like_location);
+
 
   useEffect(() => {
     (async () => {
@@ -62,22 +74,44 @@ const Location_Page = ({route}) => {
         setErrorMsg('Permission to access location was denied');
         return;
     }
-
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
   }, []);
 
+  const unsubscribe = navigation.addListener('focus', () => { // 찜 네비 누를때마다 마운트
+    console.log('위치 누를때마다 실행됨');
+    if(like.info.length !== 0){
+    let arr = [];
+    like.info.map((x, index) => {
+      arr.push({
+        latitude: x.latitude,
+        longitude: x.longitude
+      });
+    })
+   setLike_location(arr);
+  }
+    
+
+    // setLike_location(prevState => [
+    //   ...prevState,
+    //   {
+    //     latitude: 111,
+    //     longitude: 123,
+    //   }
+    // ])
+  
+  });
+
   useEffect(()=>{
-    console.log('useEffect');
-    console.log('location route: ', route);
-    console.log(route.params.latitude);
-    console.log(route.params.longitude);
-    setInitialRegion((prevState) => ({
+    if(route.params !== undefined){
+
+    setInitialRegion(prevState => ({
       ...prevState,
-      latitude: route.params.latitude,
-      longitude: route.params.longitude,
+      latitude: Number(route.params.latitude),
+      longitude: Number(route.params.longitude),
     }));
+    }
   }, [route]);
 
   const List1 = () => {
@@ -85,7 +119,7 @@ const Location_Page = ({route}) => {
     let arr = [];
     like.info.map((x, index)=>{
       arr.push(
-        <TouchableOpacity style={a.like}><Text style={a.like_text}>{x.title}</Text></TouchableOpacity>
+        <TouchableOpacity style={a.like} key={index} onPress={()=>like_touch(x)}><Text style={a.like_text}>{x.title}</Text></TouchableOpacity>
       )
     })
     return arr;
@@ -94,6 +128,16 @@ const Location_Page = ({route}) => {
   )
   }
 
+  const like_touch = (e) => {
+    console.log('like_touch');
+    console.log(e.latitude);
+    console.log(e.longitude);
+    setInitialRegion(prevState => ({
+      ...prevState,
+      latitude: Number(e.latitude),
+      longitude: Number(e.longitude),
+    }));
+  }
 
   
 
@@ -111,15 +155,15 @@ const Location_Page = ({route}) => {
           showsMyLocationButton={true}
           followsUserLocation={true}
           // provider={PROVIDER_GOOGLE}
-          style={[a.map]}
+          style={a.map}
           initialRegion={initialRegion}
           // customMapStyle={mapstyle}
         >
-        
-        <Marker
-        coordinate={{ latitude : 37.615 , longitude : 126.715 }}
-        />
-            
+        {like_location.map((x, index)=>( // test.map(x => {} 가아니다 소괄호를 써준다.)
+           <Marker
+           key={index}
+           coordinate={{latitude : Number(x.latitude), longitude: Number(x.longitude)}} />
+        ))}
         </MapView>
     </View>
   )
