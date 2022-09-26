@@ -9,32 +9,10 @@ const a = StyleSheet.create({
     container:{
         height: 80,
     },
-    box:{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-    input:{
-        backgroundColor: 'white',
-        width: '90%',
-        height: 60,
-        borderRadius: 15,
-        fontSize: 12,
-        borderWidth: 1,
-        borderColor: 'black',
-        paddingLeft: 10,
-        justifyContent: 'center',
-      },
-      serach:{
-        position: 'absolute',
-        right: 40,
-      }
 })
 const City_Search = ({navigation}) => {
 
   const [info, setInfo] = useState([]);
-
-  console.log('city_search info: ', info);
 
   const db = SQLite.openDatabase('test.db');
 
@@ -59,8 +37,7 @@ const City_Search = ({navigation}) => {
         onSelectItem={(e) => complete(e)}
         // onSubmit={(e) => complete(e)}
         // onChangeText={(e)=>complete(e)}
-        dataSet={info}
-/>
+        dataSet={info} />
     {/* <Button title='Go Back' onPress={()=>navigation.navigate('Login', {id: 1})}></Button> */}
     </View>
   )

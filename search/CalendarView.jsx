@@ -9,18 +9,6 @@ const a = StyleSheet.create({
     title:{
       fontSize: 30,
     },
-    box1:{
-      marginTop: 10,
-      alignItems: 'flex-end',
-    },
-    next:{
-      width: 50,
-      height: 40,
-      borderRadius: 10,
-      backgroundColor: 'black',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }
 })
 const CalendarView = ({day, setDay, check, setCheck, display, setDisplay}) => {
   
@@ -56,28 +44,21 @@ const CalendarView = ({day, setDay, check, setCheck, display, setDisplay}) => {
       let arrgg = [...day];
       arrgg.push(date);
       setDay(arrgg);      
+
+      let arr = [...check];
+      arr[0] = 'flex';
+      setCheck(arr);
+      let arr2 = [...display];
+      arr2[0] = !arr2[0];
+      setDisplay(arr2);
     }
   }
-  const complete = () => {
-    let arr = [...check];
-    arr[0] = 'flex';
-    setCheck(arr);
-    let arr2 = [...display];
-    arr2[0] = !arr2[0];
-    setDisplay(arr2);
-  }
-
   return (
     <View style={a.container}>
         <Text style={a.title}>날짜를 알려주세요!</Text>
         <View>
           <Calendar onDayPress={(day) => select(day.dateString, day.day)}
           markedDates={selectDate}/>
-        </View>
-        <View style={a.box1}>
-          <TouchableOpacity style={a.next} onPress={complete}>
-            <Text style={{color: 'white'}}>완료</Text>
-          </TouchableOpacity>
         </View>
     </View>
   )

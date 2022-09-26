@@ -22,8 +22,8 @@ const a = StyleSheet.create({
     justifyContent: 'center',
   },
   box:{
-    borderWidth: 3,
-    borderColor: 'orange',
+    borderWidth: 2,
+    borderColor: 'black',
     height: 230,
     marginBottom: 10,
   },
@@ -38,7 +38,7 @@ const a = StyleSheet.create({
     borderColor: 'black',
   },
   box2:{
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: 'grey',
     height: 150,
     flexDirection: 'row',
@@ -118,7 +118,7 @@ const Like_page = ({navigation}) => {
     })
     return arr;
   }else return(
-    <View style={a.except}><Text>비어있다</Text></View>
+    <View style={a.except}><Text>비어있음</Text></View>
   )
   }
 
@@ -127,7 +127,7 @@ const Like_page = ({navigation}) => {
       <View style={a.header}>
         <TouchableOpacity style={a.header_button} onPress={()=>navigation.navigate('위치', 1234)}><Text>전체선택</Text></TouchableOpacity>
         <View style={a.header_button}><Text>선택삭제</Text></View>
-        <View style={a.header_button}><Text>한개더</Text></View>
+        <View style={a.header_button}><Text>더보기</Text></View>
       </View>
       <ScrollView style={{height: '85%'}}>
         <List1 />

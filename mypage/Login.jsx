@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 const a = StyleSheet.create({
     container:{
       height: 700,
+      marginTop: 50,
     },
     logout:{
       position: 'absolute',
@@ -77,6 +78,13 @@ const Login = ({navigation, route}) => {
   {text: '설정'}
 ]);
 
+useEffect(()=>{
+  const [member, id, password] = route.params;
+  console.log(member);
+  console.log(id);
+  console.log(password);
+})
+
   const List1 = () => {
     let arr = [];
     list.map((x, index)=>{
@@ -91,7 +99,7 @@ const Login = ({navigation, route}) => {
   }
 
   const logout = () => {
-     navigation.navigator('Login');
+     navigation.push('Login');
   }
     
   return (

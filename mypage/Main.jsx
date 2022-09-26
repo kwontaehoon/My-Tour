@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView , TextInput,
-Switch, Button} from 'react-native'
+Switch, Button } from 'react-native'
 import * as SQLite from "expo-sqlite"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const a = StyleSheet.create({
     container:{
@@ -53,16 +54,26 @@ const Main = ({navigation, route}) => {
 
         switch(action.type){
             case 'login':
-                const id = info.map(x => x.id !== action.payload[1]);
-                console.log('id: ', id);
-                const passwrod = info.map(x => x.password !== action.payload[1]);
-                console.log('password: ', password);
-                if(id.length === 0 || password.length === 0){
-                    console.log('다시입력');
+                const check = member.filter(x=>{
+                    if(x.id === id && x.password === Number(password)){
+                        return x;
+                    }
+                })
+                if(check.length === 0 || id.length === 0 || password.length === 0){
+                    alert('아이디 비밀번호를 다시 확인해주세요.');
                     navigation.navigate('Login');
+                    break;
                 }else {
                     console.log('로그인됨');
-                    navigation.navigate('마이페이지', [member, kwon]);
+                    AsyncStorage.setItem('login','ok', () => {
+                        console.log('유저 id저장')
+                      });
+                    //   AsyncStorage.clear();
+                    AsyncStorage.getItem('login', (err, result) => { //user_id에 담긴 아이디 불러오기
+                        console.log('result: ', result); // result에 담김 //불러온거 출력
+                    });
+                    navigation.navigate('마이페이지', [member, id, password]);
+                    break;
                 }
             case 'logout':
                 console.log('로그아웃');
@@ -77,7 +88,6 @@ const Main = ({navigation, route}) => {
         { id: 'taehoon', password: 4567, name: '태훈', email: 'kk' }
     ]); // 회원가입 정보
     const [member, setMember] = useState([]); // 회원정보 받아옴
-    console.log('등록된 회원정보: ', member);
 
     const [kwon, dispatch] = useReducer(reducer, 0);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -112,7 +122,6 @@ const Main = ({navigation, route}) => {
         <TouchableOpacity style={[a.bar, {backgroundColor: 'yellow', marginTop: 20}]} onPress={()=>navigation.push('SignUp')}>
             <Text style={a.text}>회원가입</Text>
         </TouchableOpacity>
-        <View><Text>{kwon}</Text></View>
         </View>
     </View>
   )

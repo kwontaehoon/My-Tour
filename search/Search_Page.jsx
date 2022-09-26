@@ -16,7 +16,7 @@ const a = StyleSheet.create({
     },
 })
 
-const Search_Page = ({scroll, setScroll}) => {
+const Search_Page = ({scroll, setScroll, navigation}) => {
 
   const animation = useRef(new Animated.Value(0)).current;
 
@@ -31,7 +31,7 @@ const Search_Page = ({scroll, setScroll}) => {
   
   return (
     <Animated.View style={[a.container, { transform: [{translateY: animation}], display: scroll ? 'flex' : 'none' }]}>
-      <Header scroll={scroll} setScroll={setScroll}/>
+      <Header scroll={scroll} setScroll={setScroll} navigation={navigation}/>
       <Main />
       <Footer scroll={scroll} setScroll={setScroll}/>
     </Animated.View>

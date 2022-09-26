@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, SafeAreaView, TextInput, KeyboardAvoidingView,
 TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown'
+import all_location from '../local'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 const a = StyleSheet.create({
     container:{
@@ -11,6 +14,7 @@ const a = StyleSheet.create({
     modalBox:{
       backgroundColor: 'white',
       flexDirection: 'row',
+      marginBottom: 20,
     },
     modal:{
      flex: 1,
@@ -25,61 +29,36 @@ const a = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
-    box:{
-      marginTop: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    input:{
-      backgroundColor: 'white',
-      flex: 1,
-      height: 60,
-      borderRadius: 15,
-      fontSize: 12,
-      borderWidth: 1,
-      borderColor: 'black',
-      paddingLeft: 20,
-      justifyContent: 'center',
-    },
-    search:{
-      height: 40,
-      fontSize: 20,
-      textAlign: 'center',
-      lineHeight: 40,
-      position: 'absolute',
-      right: 15,
-    },
-    test:{
-      height: 40,
-      backgroundColor: 'black',
-    }
 })
 
-const Header = ({scroll, setScroll}) => {
+const Header = ({scroll, setScroll, navigation}) => {
 
-  
-  const [info, setInfo] = useState(); // 검색한 내용
+  const [info, setInfo] = useState(all_location); // 검색한 내용
   const [complete, setComplete] = useState(true); // 검색 완료했는지 안했는지
+  const [data, setData] = useState();
 
   const search = () => {
     setComplete(!complete);
   }
-  return complete ? (
-    <KeyboardAvoidingView style={a.container}>
+  const select = (e) => {
+    if(e !== null){
+    AsyncStorage.setItem(e.title, e.title);
+    navigation.push('Result', e);
+    }
+  }
 
-    <View style={a.modalBox}>
-      <View style={a.modal}><Text style={{fontSize: 30, fontWeight: 'bold'}}>검색</Text></View>
-      <View style={[a.modal, {alignItems: 'flex-end', paddingRight: 10}]}>
+  return complete ? (
+    <View style={a.container}>
+      <View style={a.modalBox}>
+        <View style={a.modal}><Text style={{fontSize: 30, fontWeight: 'bold'}}>검색</Text></View>
+        <View style={[a.modal, {alignItems: 'flex-end', paddingRight: 10}]}>
         <TouchableOpacity style={a.close} onPress={() => setScroll(!scroll)}><Icon name='close'></Icon></TouchableOpacity>
       </View>
     </View>
-      
-      <View style={a.box}>
-        <TextInput style={a.input} placeholder='수영장도 찾을 수 있어요.' onChangeText={(info) => setInfo(info)} clearTextOnFocus={true}></TextInput>
-        <Icon name="search" style={a.search} onPress={()=> setComplete(!complete)}></Icon>
-      </View>
-    </KeyboardAvoidingView>
+      <AutocompleteDropdown clearOnFocus={false} closeOnBlur={false}
+        closeOnSubmit={false} dataSet={info}
+        onSelectItem={(e) => select(e)} />
+    </View>
   ) : (
     <View>
       <View style={a.container}>
@@ -89,9 +68,7 @@ const Header = ({scroll, setScroll}) => {
           <View style={a.input}><Text>{info}</Text></View>
           <Icon name="search" style={a.search} onPress={search}></Icon>
       </View>
-
       </View>
-
     </View>
   )
 }

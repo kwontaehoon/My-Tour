@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown'
 
 const a = StyleSheet.create({
     container:{
@@ -10,26 +11,24 @@ const a = StyleSheet.create({
       alignItems: 'center',
     },
     button:{
+      borderWidth: 1,
+      borderColor: 'black',
       backgroundColor: '#ddd',
-      width: '30%',
+      width: '80%',
       height: 50,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 20,
       shadowColor: "black",
       backgroundColor: '#ddd',
-      elevation: 10,
-      shadowOffset: {x: 30, y: 20},
-      shadowOpacity: 0.2,
     }
 })
 const Footer = ({scroll, setScroll}) => {
 
+  const info = [1,2,3];
+
   return (
     <View style={a.container}>
-       <TouchableOpacity style={a.button}>
-        <Text style={{fontSize: 18,}}>초기화</Text>
-      </TouchableOpacity>
       <TouchableOpacity style={a.button} onPress={() => setScroll(!scroll)}>
         <Text style={{fontSize: 18,}}>검색하기</Text>
       </TouchableOpacity>

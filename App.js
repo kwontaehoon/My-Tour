@@ -195,7 +195,7 @@ const App = () => {
                     <Stack.Screen 
                         name="Login"
                         component={MyPage}/>
-                    <Stack.Screen
+                    <Stack.Screen options={{headerShown: false}}
                         name="마이페이지"
                         component={Login} />
                     <Stack.Screen

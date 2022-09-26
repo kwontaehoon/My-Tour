@@ -136,10 +136,9 @@ const test = [{ latitude : 37.615 , longitude : 126.715 }];
       ...prevState,
       latitude: Number(e.latitude),
       longitude: Number(e.longitude),
-    }));
+    })); 
   }
 
-  
 
   return (
     <View style={a.container}>
@@ -156,7 +155,7 @@ const test = [{ latitude : 37.615 , longitude : 126.715 }];
           followsUserLocation={true}
           // provider={PROVIDER_GOOGLE}
           style={a.map}
-          initialRegion={initialRegion}
+          region={initialRegion}
           // customMapStyle={mapstyle}
         >
         {like_location.map((x, index)=>( // test.map(x => {} 가아니다 소괄호를 써준다.)

@@ -10,7 +10,7 @@ const a = StyleSheet.create({
       height: 140,
     },
     subcontainer:{
-      width: 1000,
+      width: 700,
       height: 100,
       flexDirection: 'row',
       justifyContent: 'space-around',
@@ -49,7 +49,7 @@ const a = StyleSheet.create({
 })
 const Main = ({navigation}) => {
 
-  const images = ['서울', '경기', '인천', '제주도', '강원도', '전라남도', '전라북도', '경상북도', '부산'];
+  const images = ['서울', '경기', '인천', '제주도', '강원도', '전라남도'];
   const [cm, setCm] = useState(0); // scrollView 테스트용
 
   const List1 = () => {

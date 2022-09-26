@@ -18,7 +18,7 @@ const Main_Page = ({navigation, list, like, setLike}) => {
   return (
     <>
     <Header scroll={scroll} setScroll={setScroll} />
-    <Search_Page scroll={scroll} setScroll={setScroll}/>
+    <Search_Page scroll={scroll} setScroll={setScroll} navigation={navigation}/>
    
     <ScrollView>
       <Main navigation={navigation}/>

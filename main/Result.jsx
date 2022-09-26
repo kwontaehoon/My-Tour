@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SwiperFlatList from 'react-native-swiper-flatlist'
@@ -86,6 +86,7 @@ const Result = ({route, list}) => {
   // console.log('isDark: ', isDark);
 
   const [filter, setFilter] = useState([]); // location 필터링
+  console.log('filter: ', filter);
 
   useEffect(()=>{
     AsyncStorage.getAllKeys((err, keys) => {

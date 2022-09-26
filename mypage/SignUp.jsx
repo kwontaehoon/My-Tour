@@ -65,7 +65,7 @@ const SignUp = ({navigation, route}) => {
   const [userName, setUserName] = useState('');
   const [userPass, setUserPass] = useState('');
   const [userEmail, setUserEmail] = useState('');
-  const [userAddress, setUserAddress] = useState('');
+  const [userAddress, setUserAddress] = useState(route.params);
   const [userAddress2, setUserAddress2] = useState('');
   const [member, setMember] = useState([]); // 회원멤버 정보
 
@@ -114,28 +114,25 @@ const SignUp = ({navigation, route}) => {
 
     
 
-  //   try{
-  //   db.transaction((tx) => {
-  //     tx.executeSql(
-  //       'insert into member(id, password, name, email, address, address2) values(?,?,?,?,?,?)',
-  //       [userId, userPass, userName, userEmail, userAddress, userAddress2], [],
-  //       (tx, results)=>{
-  //         console.log('dddddddd: ', results);
-
-  //       }
-  //       );
+    try{
+    db.transaction((tx) => {
+      tx.executeSql(
+        'insert into member(id, password, name, email, address, address2) values(?,?,?,?,?,?)',
+        [userId, userPass, userName, userEmail, userAddress, userAddress2], [],
+        (tx, results)=>{
+          console.log('dddddddd: ', results);
+        });
       
-  //     tx.executeSql(
-  //       'select * from member;', [], (tx, results) =>{
-  //         console.log(results.rows._array);
-  //       }
-  //     )
-  //   })
-  //   console.log('complete');
+      tx.executeSql(
+        'select * from member;', [], (tx, results) =>{
+          console.log(results.rows._array);
+        })
+    })
+    console.log('complete');
     
-  // }catch(error){
-  //   console.log(error);
-  // }
+  }catch(error){
+    console.log(error);
+  }
   // navigation.navigate('Login', [userId, userName, userPass]);
 }
 
